@@ -19,7 +19,7 @@ BG = pygame.image.load("assets/Background.png")
 def render_multi_line(text, x, y, fsize):
         lines = text.splitlines()
         for i, l in enumerate(lines):
-            SCREEN.blit(get_font(30).render(l, 0, "Black"), (x, y + fsize*i))
+            SCREEN.blit(get_font(30).render(l, 0, "White"), (x, y + fsize*2*i))
 
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("assets/font.ttf", size)
@@ -62,7 +62,7 @@ def play():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAYER_VS_PLAYER.checkForInput(PLAY_MOUSE_POS):
-                    difficulty(PVP)
+                    pvp()
                 if PLAYER_VS_CPU.checkForInput(PLAY_MOUSE_POS):
                     difficulty(PVC)
                 if CPU_VS_CPU.checkForInput(PLAY_MOUSE_POS):
@@ -76,16 +76,15 @@ def play():
 
 def instructions():
     while True:
+        SCREEN.blit(BG, (0, 0))
         INSTRUCTIONS_MOUSE_POS = pygame.mouse.get_pos()
-
-        SCREEN.fill("white")
 
         text = "Both players need four pieces to play.\nThe older player places their four pieces on four of the five forks around the outer ring.\nThe younger player places their four pieces on the central pentagon, each one on a fork opposite one of the older player’s pieces.\nThe older player takes the first turn. Thereafter players alternate.\nOn your turn, move one of your four pieces along a single edge to an empty adjacent fork.\nYou must move a piece.\nA piece is bound if is surrounded on all three sides, by any combination of players’ pieces.\nIf, at any time, one of your opponent’s pieces is bound, you have won the game."
 
-        render_multi_line(text, 100, 200, 75)
+        render_multi_line(text, 75, 200, 25)
 
         INSTRUCTIONS_BACK = Button(image=None, pos=(640, 460), 
-                            text_input="BACK", font=get_font(30), base_color="Black", hovering_color="Red")
+                            text_input="BACK", font=get_font(30), base_color="White", hovering_color="Red")
 
         INSTRUCTIONS_BACK.changeColor(INSTRUCTIONS_MOUSE_POS)
         INSTRUCTIONS_BACK.update(SCREEN)
@@ -173,23 +172,17 @@ def difficulty(mode):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if EASY.checkForInput(PLAY_MOUSE_POS):
-                    if mode == PVP:
-                        pvp(E)
-                    elif mode == PVC:
+                    if mode == PVC:
                         pvc(E)
                     else:
                         cvc(E)        
                 if MEDIUM.checkForInput(PLAY_MOUSE_POS):
-                    if mode == PVP:
-                        pvp(M)
-                    elif mode == PVC:
+                    if mode == PVC:
                         pvc(M)
                     else:
                         cvc(M) 
                 if HARD.checkForInput(PLAY_MOUSE_POS):
-                    if mode == PVP:
-                        pvp(H)
-                    elif mode == PVC:
+                    if mode == PVC:
                         pvc(H)
                     else:
                         cvc(H) 
@@ -198,7 +191,7 @@ def difficulty(mode):
 
         pygame.display.update()
 
-def pvp(dif):
+def pvp():
     while True:
         SCREEN.blit(BG, (0, 0))
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
@@ -220,7 +213,7 @@ def pvp(dif):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    difficulty(PVP)
+                    play()
 
         pygame.display.update()
 
