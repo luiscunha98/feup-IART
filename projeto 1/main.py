@@ -6,6 +6,14 @@ pygame.init()
 SCREEN = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Menu")
 
+PVP = 1
+PVC = 2
+CVC = 3
+
+E = 1
+M = 2
+H = 3
+
 BG = pygame.image.load("assets/Background.png")
 
 def render_multi_line(text, x, y, fsize):
@@ -19,16 +27,31 @@ def get_font(size): # Returns Press-Start-2P in the desired size
 def play():
 
     while True:
+        SCREEN.blit(BG, (0, 0))
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
-        SCREEN.fill("assets/board.png")
-
+        #BOARD = pygame.image.load("assets/board.png")
+        #SCREEN.blit(BOARD, (0, 0))
         PLAY_TEXT = get_font(45).render("Game Mode:", True, "White")
-        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(300, 100))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
 
-        PLAY_BACK = Button(image=None, pos=(640, 460), 
-                            text_input="BACK", font=get_font(75), base_color="White", hovering_color="Red")
+        PLAYER_VS_PLAYER = Button(image=None, pos=(500, 250), 
+                            text_input="PLAYER VS PLAYER", font=get_font(35), base_color="White", hovering_color="Red")
+        PLAYER_VS_PLAYER.changeColor(PLAY_MOUSE_POS)
+        PLAYER_VS_PLAYER.update(SCREEN)
+
+        PLAYER_VS_CPU = Button(image=None, pos=(447, 350), 
+                            text_input="PLAYER VS CPU", font=get_font(35), base_color="White", hovering_color="Red")
+        PLAYER_VS_CPU.changeColor(PLAY_MOUSE_POS)
+        PLAYER_VS_CPU.update(SCREEN)
+
+        CPU_VS_CPU = Button(image=None, pos=(395, 450), 
+                            text_input="CPU VS CPU", font=get_font(35), base_color="White", hovering_color="Red")
+        CPU_VS_CPU.changeColor(PLAY_MOUSE_POS)
+        CPU_VS_CPU.update(SCREEN)
+
+        PLAY_BACK = Button(image=None, pos=(640, 600), 
+                            text_input="BACK", font=get_font(50), base_color="White", hovering_color="Red")
 
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
@@ -38,7 +61,12 @@ def play():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-
+                if PLAYER_VS_PLAYER.checkForInput(PLAY_MOUSE_POS):
+                    difficulty(PVP)
+                if PLAYER_VS_CPU.checkForInput(PLAY_MOUSE_POS):
+                    difficulty(PVC)
+                if CPU_VS_CPU.checkForInput(PLAY_MOUSE_POS):
+                    difficulty(CVC)
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
 
@@ -106,6 +134,145 @@ def main_menu():
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
                     sys.exit()
+
+        pygame.display.update()
+
+def difficulty(mode):
+    while True:
+        SCREEN.blit(BG, (0, 0))
+        PLAY_MOUSE_POS = pygame.mouse.get_pos()
+        
+        PLAY_TEXT = get_font(45).render("Difficulty:", True, "White")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(300, 100))
+        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+
+        EASY = Button(image=None, pos=(300, 250), 
+                            text_input="EASY", font=get_font(35), base_color="White", hovering_color="Red")
+        EASY.changeColor(PLAY_MOUSE_POS)
+        EASY.update(SCREEN)
+
+        MEDIUM = Button(image=None, pos=(335, 350), 
+                            text_input="MEDIUM", font=get_font(35), base_color="White", hovering_color="Red")
+        MEDIUM.changeColor(PLAY_MOUSE_POS)
+        MEDIUM.update(SCREEN)
+
+        HARD = Button(image=None, pos=(300, 450), 
+                            text_input="HARD", font=get_font(35), base_color="White", hovering_color="Red")
+        HARD.changeColor(PLAY_MOUSE_POS)
+        HARD.update(SCREEN)
+
+        PLAY_BACK = Button(image=None, pos=(640, 600), 
+                            text_input="BACK", font=get_font(50), base_color="White", hovering_color="Red")
+
+        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
+        PLAY_BACK.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if EASY.checkForInput(PLAY_MOUSE_POS):
+                    if mode == PVP:
+                        pvp(E)
+                    elif mode == PVC:
+                        pvc(E)
+                    else:
+                        cvc(E)        
+                if MEDIUM.checkForInput(PLAY_MOUSE_POS):
+                    if mode == PVP:
+                        pvp(M)
+                    elif mode == PVC:
+                        pvc(M)
+                    else:
+                        cvc(M) 
+                if HARD.checkForInput(PLAY_MOUSE_POS):
+                    if mode == PVP:
+                        pvp(H)
+                    elif mode == PVC:
+                        pvc(H)
+                    else:
+                        cvc(H) 
+                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    play()
+
+        pygame.display.update()
+
+def pvp(dif):
+    while True:
+        SCREEN.blit(BG, (0, 0))
+        PLAY_MOUSE_POS = pygame.mouse.get_pos()
+        #BOARD = pygame.image.load("assets/board.png")
+        #SCREEN.blit(BOARD, (0, 0))
+        PLAY_TEXT = get_font(45).render("PLAYER VS PLAYER", True, "White")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(400, 100))
+        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+
+        PLAY_BACK = Button(image=None, pos=(640, 600), 
+                            text_input="BACK", font=get_font(50), base_color="White", hovering_color="Red")
+
+        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
+        PLAY_BACK.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    difficulty(PVP)
+
+        pygame.display.update()
+
+def pvc(dif):
+    while True:
+        SCREEN.blit(BG, (0, 0))
+        PLAY_MOUSE_POS = pygame.mouse.get_pos()
+        #BOARD = pygame.image.load("assets/board.png")
+        #SCREEN.blit(BOARD, (0, 0))
+        PLAY_TEXT = get_font(45).render("PLAYER VS CPU", True, "White")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(400, 100))
+        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+
+        PLAY_BACK = Button(image=None, pos=(640, 600), 
+                            text_input="BACK", font=get_font(50), base_color="White", hovering_color="Red")
+
+        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
+        PLAY_BACK.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    difficulty(PVC)
+
+        pygame.display.update()
+
+def cvc(dif):
+    while True:
+        SCREEN.blit(BG, (0, 0))
+        PLAY_MOUSE_POS = pygame.mouse.get_pos()
+        #BOARD = pygame.image.load("assets/board.png")
+        #SCREEN.blit(BOARD, (0, 0))
+        PLAY_TEXT = get_font(45).render("CPU VS CPU", True, "White")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(400, 100))
+        SCREEN.blit(PLAY_TEXT, PLAY_RECT)
+
+        PLAY_BACK = Button(image=None, pos=(640, 600), 
+                            text_input="BACK", font=get_font(50), base_color="White", hovering_color="Red")
+
+        PLAY_BACK.changeColor(PLAY_MOUSE_POS)
+        PLAY_BACK.update(SCREEN)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                    difficulty(CVC)
 
         pygame.display.update()
 
