@@ -8,16 +8,22 @@ pygame.display.set_caption("Menu")
 
 BG = pygame.image.load("assets/Background.png")
 
+def render_multi_line(text, x, y, fsize):
+        lines = text.splitlines()
+        for i, l in enumerate(lines):
+            SCREEN.blit(get_font(30).render(l, 0, "Black"), (x, y + fsize*i))
+
 def get_font(size): # Returns Press-Start-2P in the desired size
     return pygame.font.Font("assets/font.ttf", size)
 
 def play():
+
     while True:
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
 
-        SCREEN.fill("black")
+        SCREEN.fill("assets/board.png")
 
-        PLAY_TEXT = get_font(45).render("This is the PLAY screen.", True, "White")
+        PLAY_TEXT = get_font(45).render("Game Mode:", True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
 
@@ -32,23 +38,26 @@ def play():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
 
         pygame.display.update()
     
+
+
 def instructions():
     while True:
         INSTRUCTIONS_MOUSE_POS = pygame.mouse.get_pos()
 
         SCREEN.fill("white")
 
-        INSTRUCTIONS_TEXT = get_font(45).render("This is the INSTRUCTIONS screen.", True, "Black")
-        INSTRUCTIONS_RECT = INSTRUCTIONS_TEXT.get_rect(center=(640, 260))
-        SCREEN.blit(INSTRUCTIONS_TEXT, INSTRUCTIONS_RECT)
+        text = "Both players need four pieces to play.\nThe older player places their four pieces on four of the five forks around the outer ring.\nThe younger player places their four pieces on the central pentagon, each one on a fork opposite one of the older player’s pieces.\nThe older player takes the first turn. Thereafter players alternate.\nOn your turn, move one of your four pieces along a single edge to an empty adjacent fork.\nYou must move a piece.\nA piece is bound if is surrounded on all three sides, by any combination of players’ pieces.\nIf, at any time, one of your opponent’s pieces is bound, you have won the game."
+
+        render_multi_line(text, 100, 200, 75)
 
         INSTRUCTIONS_BACK = Button(image=None, pos=(640, 460), 
-                            text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Red")
+                            text_input="BACK", font=get_font(30), base_color="Black", hovering_color="Red")
 
         INSTRUCTIONS_BACK.changeColor(INSTRUCTIONS_MOUSE_POS)
         INSTRUCTIONS_BACK.update(SCREEN)
