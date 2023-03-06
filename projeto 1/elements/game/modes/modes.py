@@ -1,6 +1,9 @@
-from common.functions import *
-from common.classes.button import *
 import sys
+from common.classes.piece import *
+from elements.game.modes.pvp.movements import *
+
+pieces = piece()
+
 
 def difficulty(main_menu, play, mode):
     while True:
@@ -64,6 +67,7 @@ def pvp(main_menu):
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
         BOARD = pygame.image.load("resources/images/Board.png")
         SCREEN.blit(BOARD, (340, 100))
+        draw_initial_positions()
         PLAY_TEXT = get_font(35).render("PLAYER VS PLAYER", True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
@@ -78,6 +82,7 @@ def pvp(main_menu):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            movements(event)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()

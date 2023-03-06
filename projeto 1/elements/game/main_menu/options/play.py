@@ -1,4 +1,4 @@
-from elements.game.dificulty.dificulty import *
+from elements.game.modes.modes import *
 
 
 def play(main_menu):
