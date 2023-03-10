@@ -60,6 +60,10 @@ def difficulty(main_menu, play, mode):
 
 
 def pvp(main_menu):
+    aux_pos = {}
+    selected = ()
+    click = False
+    n_play = 1
     player_turn = 1  # Player 1 goes first
     black_pieces = []
     white_pieces = []
@@ -78,6 +82,9 @@ def pvp(main_menu):
         # Draw the pieces on the board
         for piece in black_pieces + white_pieces:
             pygame.draw.circle(SCREEN, piece['color'], piece['position'], PIECE_RADIUS)
+        
+        if len(selected) != 0:
+            pygame.draw.circle(SCREEN, "Red", selected, PIECE_RADIUS)
 
         PLAY_BACK = Button(image=None, pos=(175, 625),
                            text_input="QUIT GAME", font=get_font(35), base_color="White", hovering_color="Red")
@@ -89,25 +96,62 @@ def pvp(main_menu):
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                    main_menu()
-                else:
-                    # Check if the click is within one of the positions
-                    for i, pos in enumerate(POSITIONS):
-                        if distance(pos, PLAY_MOUSE_POS) < PIECE_RADIUS:
-                            # Check if the position is already occupied
-                            if not any(piece['position'] == pos for piece in black_pieces + white_pieces):
-                                # Add the piece to the list
-                                if player_turn == 1 and len(black_pieces) < 4:
-                                    color = BLACK
-                                    black_pieces.append({'position': pos, 'color': color})
-                                    player_turn = 2
-                                elif player_turn == 2 and len(white_pieces) < 4:
-                                    color = WHITE
-                                    white_pieces.append({'position': pos, 'color': color})
-                                    player_turn = 1
-
+            if n_play < 9:  # Players put all of their pieces in the board first
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                        main_menu()
+                    else:
+                        # Check if the click is within one of the positions
+                        for i, pos in enumerate(POSITIONS):
+                            if distance(pos, PLAY_MOUSE_POS) < PIECE_RADIUS:
+                                # Check if the position is already occupied
+                                if not any(piece['position'] == pos for piece in black_pieces + white_pieces):
+                                    # Add the piece to the list
+                                    if player_turn == 1 and len(black_pieces) < 4:
+                                        color = BLACK
+                                        black_pieces.append({'position': pos, 'color': color})
+                                        if len(black_pieces) == 4:
+                                            player_turn = 2
+                                        n_play += 1
+                                    elif player_turn == 2 and len(white_pieces) < 4:
+                                        color = WHITE
+                                        white_pieces.append({'position': pos, 'color': color})
+                                        if len(white_pieces) == 4:
+                                            player_turn = 1
+                                        n_play += 1
+                                    
+            else:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                        main_menu()
+                    else:
+                        # Check if the click is within one of the positions
+                        for i, pos in enumerate(POSITIONS):
+                            if distance(pos, PLAY_MOUSE_POS) < PIECE_RADIUS:
+                                if click:
+                                    if player_turn == 1:
+                                        color = BLACK
+                                        black_pieces.remove({'position': aux_pos, 'color': color})
+                                        black_pieces.append({'position': pos, 'color': color})
+                                        selected = {}
+                                        player_turn = 2
+                                    else:
+                                        color = WHITE
+                                        white_pieces.remove({'position': aux_pos, 'color': color})
+                                        white_pieces.append({'position': pos, 'color': color})
+                                        selected = {}
+                                        player_turn = 1
+                                    click = False
+                                if player_turn == 1:
+                                    if any(piece['position'] == pos for piece in black_pieces):
+                                        selected = pos
+                                        aux_pos = pos
+                                        click = True
+                                else:
+                                    if any(piece['position'] == pos for piece in white_pieces):
+                                        selected = pos
+                                        aux_pos = pos
+                                        click = True
         pygame.display.update()
 
 
