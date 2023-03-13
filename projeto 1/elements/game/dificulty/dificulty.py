@@ -2,6 +2,8 @@ from common.functions import *
 from common.classes.button import *
 import sys
 
+global teste
+
 
 def difficulty(main_menu, play, mode):
     while True:
@@ -75,14 +77,14 @@ def pvp(main_menu):
         PLAY_TEXT = get_font(35).render("PLAYER VS PLAYER", True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
-
-        for POSITION in POSITIONS:
-            pygame.draw.circle(SCREEN, BLUE, (POSITION.x,POSITION.y), PIECE_RADIUS)
+        teste = {0, 2, 7, 18, 19}
+        for i in teste:
+            pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
 
         # Draw the pieces on the board
         for piece in black_pieces + white_pieces:
             pygame.draw.circle(SCREEN, piece['color'], piece['position'], PIECE_RADIUS)
-        
+
         if len(selected) != 0:
             pygame.draw.circle(SCREEN, "Red", selected, PIECE_RADIUS)
 
@@ -102,10 +104,11 @@ def pvp(main_menu):
                         main_menu()
                     else:
                         # Check if the click is within one of the positions
-                        for i in range(20):
+                        for i in teste:
                             if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
                                 # Check if the position is already occupied
-                                if not any(piece['position'] == POSITIONS[i].get_position() for piece in black_pieces + white_pieces):
+                                if not any(piece['position'] == POSITIONS[i].get_position() for piece in
+                                           black_pieces + white_pieces):
                                     # Add the piece to the list
                                     if player_turn == 1 and len(black_pieces) < 4:
                                         color = BLACK
@@ -113,13 +116,22 @@ def pvp(main_menu):
                                         if len(black_pieces) == 4:
                                             player_turn = 2
                                         n_play += 1
-                                    elif player_turn == 2 and len(white_pieces) < 4:
+                        teste = {8, 9, 11, 12, 13}
+                        for i in teste:
+                            pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
+                        for i in teste:
+                            if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
+                                # Check if the position is already occupied
+                                if not any(piece['position'] == POSITIONS[i].get_position() for piece in
+                                           black_pieces + white_pieces):
+                                    # Add the piece to the list
+                                    if player_turn == 2 and len(white_pieces) < 4:
                                         color = WHITE
                                         white_pieces.append({'position': POSITIONS[i].get_position(), 'color': color})
                                         if len(white_pieces) == 4:
                                             player_turn = 1
                                         n_play += 1
-                                    
+
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
@@ -153,7 +165,6 @@ def pvp(main_menu):
                                         aux_pos = POSITIONS[i].get_position()
                                         click = True
         pygame.display.update()
-
 
 
 def pvc(main_menu, dif):
