@@ -4,6 +4,7 @@ import sys
 
 global start_bpositions
 global start_wpositions
+global player_turn
 
 
 def difficulty(main_menu, play, mode):
@@ -81,8 +82,14 @@ def pvp(main_menu):
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
 
-        for i in range(20):
-            pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
+
+        if(len(black_pieces) != 4):
+            for i in start_bpositions:
+                pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
+
+        if (player_turn == 2 and len(white_pieces) != 4):
+            for i in start_wpositions:
+                pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
         
 
         # Draw the pieces on the board
