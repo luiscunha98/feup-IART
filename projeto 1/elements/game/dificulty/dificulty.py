@@ -2,7 +2,8 @@ from common.functions import *
 from common.classes.button import *
 import sys
 
-global teste
+global start_bpositions
+global start_wpositions
 
 
 def difficulty(main_menu, play, mode):
@@ -77,9 +78,12 @@ def pvp(main_menu):
         PLAY_TEXT = get_font(35).render("PLAYER VS PLAYER", True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
-        teste = {0, 2, 7, 18, 19}
-        for i in teste:
+        start_bpositions = {0, 2, 7, 18, 19}
+        start_wpositions = {8, 9, 11, 12, 13}
+
+        for i in range(20):
             pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
+        
 
         # Draw the pieces on the board
         for piece in black_pieces + white_pieces:
@@ -104,7 +108,7 @@ def pvp(main_menu):
                         main_menu()
                     else:
                         # Check if the click is within one of the positions
-                        for i in teste:
+                        for i in start_bpositions:
                             if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
                                 # Check if the position is already occupied
                                 if not any(piece['position'] == POSITIONS[i].get_position() for piece in
@@ -116,10 +120,7 @@ def pvp(main_menu):
                                         if len(black_pieces) == 4:
                                             player_turn = 2
                                         n_play += 1
-                        teste = {8, 9, 11, 12, 13}
-                        for i in teste:
-                            pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
-                        for i in teste:
+                        for i in start_wpositions:
                             if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
                                 # Check if the position is already occupied
                                 if not any(piece['position'] == POSITIONS[i].get_position() for piece in
