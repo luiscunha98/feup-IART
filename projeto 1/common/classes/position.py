@@ -10,9 +10,6 @@ class Position():
     def set_busy(self, busy_value):
         self.busy = busy_value
 
-    def get_busy(self):
-        return self.busy
-
     def possible_moves(self, poss1, poss2, poss3):
         self.poss1 = poss1
         self.poss2 = poss2
