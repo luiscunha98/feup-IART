@@ -77,7 +77,7 @@ def pvp(main_menu):
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
 
         for POSITION in POSITIONS:
-            pygame.draw.circle(SCREEN, BLUE, POSITION, PIECE_RADIUS)
+            pygame.draw.circle(SCREEN, BLUE, (POSITION.x,POSITION.y), PIECE_RADIUS)
 
         # Draw the pieces on the board
         for piece in black_pieces + white_pieces:
@@ -102,20 +102,20 @@ def pvp(main_menu):
                         main_menu()
                     else:
                         # Check if the click is within one of the positions
-                        for i, pos in enumerate(POSITIONS):
-                            if distance(pos, PLAY_MOUSE_POS) < PIECE_RADIUS:
+                        for i in range(20):
+                            if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
                                 # Check if the position is already occupied
-                                if not any(piece['position'] == pos for piece in black_pieces + white_pieces):
+                                if not any(piece['position'] == POSITIONS[i].get_position() for piece in black_pieces + white_pieces):
                                     # Add the piece to the list
                                     if player_turn == 1 and len(black_pieces) < 4:
                                         color = BLACK
-                                        black_pieces.append({'position': pos, 'color': color})
+                                        black_pieces.append({'position': POSITIONS[i].get_position(), 'color': color})
                                         if len(black_pieces) == 4:
                                             player_turn = 2
                                         n_play += 1
                                     elif player_turn == 2 and len(white_pieces) < 4:
                                         color = WHITE
-                                        white_pieces.append({'position': pos, 'color': color})
+                                        white_pieces.append({'position': POSITIONS[i].get_position(), 'color': color})
                                         if len(white_pieces) == 4:
                                             player_turn = 1
                                         n_play += 1
@@ -126,31 +126,31 @@ def pvp(main_menu):
                         main_menu()
                     else:
                         # Check if the click is within one of the positions
-                        for i, pos in enumerate(POSITIONS):
-                            if distance(pos, PLAY_MOUSE_POS) < PIECE_RADIUS:
+                        for i in range(20):
+                            if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
                                 if click:
                                     if player_turn == 1:
                                         color = BLACK
                                         black_pieces.remove({'position': aux_pos, 'color': color})
-                                        black_pieces.append({'position': pos, 'color': color})
+                                        black_pieces.append({'position': POSITIONS[i].get_position(), 'color': color})
                                         selected = {}
                                         player_turn = 2
                                     else:
                                         color = WHITE
                                         white_pieces.remove({'position': aux_pos, 'color': color})
-                                        white_pieces.append({'position': pos, 'color': color})
+                                        white_pieces.append({'position': POSITIONS[i].get_position(), 'color': color})
                                         selected = {}
                                         player_turn = 1
                                     click = False
                                 if player_turn == 1:
-                                    if any(piece['position'] == pos for piece in black_pieces):
-                                        selected = pos
-                                        aux_pos = pos
+                                    if any(piece['position'] == POSITIONS[i].get_position() for piece in black_pieces):
+                                        selected = POSITIONS[i].get_position()
+                                        aux_pos = POSITIONS[i].get_position()
                                         click = True
                                 else:
-                                    if any(piece['position'] == pos for piece in white_pieces):
-                                        selected = pos
-                                        aux_pos = pos
+                                    if any(piece['position'] == POSITIONS[i].get_position() for piece in white_pieces):
+                                        selected = POSITIONS[i].get_position()
+                                        aux_pos = POSITIONS[i].get_position()
                                         click = True
         pygame.display.update()
 
