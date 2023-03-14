@@ -1,7 +1,6 @@
 from common.functions import *
 from common.classes.button import *
 import sys
-import linecache
 
 global start_bpositions
 global start_wpositions
@@ -82,7 +81,6 @@ def pvp(main_menu):
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
-        game_over = 0
 
 
         if(len(black_pieces) != 4):
@@ -100,6 +98,12 @@ def pvp(main_menu):
 
         if selected != None:
             pygame.draw.circle(SCREEN, "Red", selected.get_position(), PIECE_RADIUS)
+            if (selected.poss1.busy == False):
+                pygame.draw.circle(SCREEN, BLUE, selected.poss1.get_position(), PIECE_RADIUS)
+            if (selected.poss2.busy == False):
+                pygame.draw.circle(SCREEN, BLUE, selected.poss2.get_position(), PIECE_RADIUS)
+            if (selected.poss3.busy == False):
+                pygame.draw.circle(SCREEN, BLUE, selected.poss3.get_position(), PIECE_RADIUS)
 
         PLAY_BACK = Button(image=None, pos=(175, 625),
                            text_input="QUIT GAME", font=get_font(35), base_color="White", hovering_color="Red")
