@@ -13,3 +13,9 @@ def distance(point1, point2):
     x1, y1 = point1.x, point1.y
     x2, y2 = point2
     return ((x2 - x1)**2 + (y2 - y1)**2)**0.5
+
+def verify(position):
+    if position.busy == True and position.poss1.busy == True and position.poss2.busy == True and position.poss3.busy == True:
+        return True #winner
+    else:
+        return False #no winner

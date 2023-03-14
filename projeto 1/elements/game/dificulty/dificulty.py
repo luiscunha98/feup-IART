@@ -2,9 +2,12 @@ from common.functions import *
 from common.classes.button import *
 import sys
 
+from elements.game.game_over.game_over import game_over
+
 global start_bpositions
 global start_wpositions
 global player_turn
+global gameover
 
 
 def difficulty(main_menu, play, mode):
@@ -82,15 +85,13 @@ def pvp(main_menu):
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
 
-
-        if(len(black_pieces) != 4):
+        if (len(black_pieces) != 4):
             for i in start_bpositions:
                 pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
 
         if (player_turn == 2 and len(white_pieces) != 4):
             for i in start_wpositions:
                 pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
-        
 
         # Draw the pieces on the board
         for piece in black_pieces + white_pieces:
@@ -124,7 +125,8 @@ def pvp(main_menu):
                         for i in start_bpositions:
                             if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
                                 # Check if the position is already occupied
-                                if not any(piece['position'] == POSITIONS[i].get_position() for piece in black_pieces + white_pieces):
+                                if not any(piece['position'] == POSITIONS[i].get_position() for piece in
+                                           black_pieces + white_pieces):
                                     # Add the piece to the list
                                     if player_turn == 1 and len(black_pieces) < 4:
                                         color = BLACK
@@ -136,7 +138,8 @@ def pvp(main_menu):
                         for i in start_wpositions:
                             if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
                                 # Check if the position is already occupied
-                                if not any(piece['position'] == POSITIONS[i].get_position() for piece in black_pieces + white_pieces):
+                                if not any(piece['position'] == POSITIONS[i].get_position() for piece in
+                                           black_pieces + white_pieces):
                                     # Add the piece to the list
                                     if player_turn == 2 and len(white_pieces) < 4:
                                         color = WHITE
@@ -157,19 +160,25 @@ def pvp(main_menu):
                                 if click:
                                     if player_turn == 1:
                                         color = BLACK
-                                        if (selected == POSITIONS[i].poss1 and POSITIONS[i].busy == False) or (selected == POSITIONS[i].poss2 and POSITIONS[i].busy == False) or (selected == POSITIONS[i].poss3 and POSITIONS[i].busy == False):
+                                        if (selected == POSITIONS[i].poss1 and POSITIONS[i].busy == False) or (
+                                                selected == POSITIONS[i].poss2 and POSITIONS[i].busy == False) or (
+                                                selected == POSITIONS[i].poss3 and POSITIONS[i].busy == False):
                                             black_pieces.remove({'position': aux_pos.get_position(), 'color': color})
                                             aux_pos.set_busy(False)
-                                            black_pieces.append({'position': POSITIONS[i].get_position(), 'color': color})
+                                            black_pieces.append(
+                                                {'position': POSITIONS[i].get_position(), 'color': color})
                                             POSITIONS[i].set_busy(True)
                                             player_turn = 2
                                         selected = None
                                     else:
                                         color = WHITE
-                                        if (selected == POSITIONS[i].poss1 and POSITIONS[i].busy == False) or (selected == POSITIONS[i].poss2 and POSITIONS[i].busy == False) or (selected == POSITIONS[i].poss3 and POSITIONS[i].busy == False):
+                                        if (selected == POSITIONS[i].poss1 and POSITIONS[i].busy == False) or (
+                                                selected == POSITIONS[i].poss2 and POSITIONS[i].busy == False) or (
+                                                selected == POSITIONS[i].poss3 and POSITIONS[i].busy == False):
                                             white_pieces.remove({'position': aux_pos.get_position(), 'color': color})
                                             aux_pos.set_busy(False)
-                                            white_pieces.append({'position': POSITIONS[i].get_position(), 'color': color})
+                                            white_pieces.append(
+                                                {'position': POSITIONS[i].get_position(), 'color': color})
                                             POSITIONS[i].set_busy(True)
                                             player_turn = 1
                                         selected = None
@@ -184,9 +193,10 @@ def pvp(main_menu):
                                         selected = POSITIONS[i]
                                         aux_pos = POSITIONS[i]
                                         click = True
+        for position in POSITIONS:
+            if verify(position) == 1:
+                game_over()
         pygame.display.update()
-
-
 
 def pvc(main_menu, dif):
     while True:
