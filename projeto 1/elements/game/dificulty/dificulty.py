@@ -195,7 +195,7 @@ def pvp(main_menu):
                                         click = True
         for position in POSITIONS:
             if verify(position) == 1:
-                game_over()
+                game_over(player_turn)
         pygame.display.update()
 
 def pvc(main_menu, dif):
