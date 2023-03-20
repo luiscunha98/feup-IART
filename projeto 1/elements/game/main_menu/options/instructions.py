@@ -2,6 +2,7 @@ from common.functions import *
 from common.classes.button import *
 import sys
 
+
 def instructions(main_menu):
     while True:
         SCREEN.blit(BG, (0, 0))

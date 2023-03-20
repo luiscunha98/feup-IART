@@ -1,6 +1,7 @@
 from elements.game.main_menu.options.instructions import *
 from elements.game.main_menu.options.play import *
 
+
 def main_menu():
     while True:
         SCREEN.blit(BG, (0, 0))

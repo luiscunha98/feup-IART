@@ -1,8 +1,8 @@
 from common.functions import *
 from common.classes.button import *
 
-def game_over(player_turn):
 
+def game_over(player_turn):
     if player_turn == 1:
         # Load the p1 wins image
         game_over_image = pygame.image.load("resources/images/p1wins.png")
