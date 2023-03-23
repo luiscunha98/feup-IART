@@ -23,22 +23,22 @@ def utility(white_pieces, black_pieces):
                 if position.poss3.busy:
                     white += 1
 
-    return (black - white)
+    return (black - white)/(black+white)
 
 def minimax(depth, is_maximizing, black_pieces, white_pieces, possible_moves, alpha, beta):
     # Check if game over or maximum depth reached
     for i in range(20):
-        if not verify(POSITIONS[i]):
+        if verify(POSITIONS[i]) or depth == 0:
             return utility(white_pieces, black_pieces)
-        else:
-            return 1  # parte do game over
+        #else:
+        #   return 1  # parte do game over
 
     # If it's the maximizing player's turn
     if is_maximizing:
         value = -math.inf
         for move in possible_moves:
             value = max(value, minimax(depth - 1, False, black_pieces, white_pieces, possible_moves, alpha, beta))
-            move.value = value
+            move[1].value = value
             alpha = max(alpha, value)
             if beta <= alpha:
                 break
@@ -49,7 +49,7 @@ def minimax(depth, is_maximizing, black_pieces, white_pieces, possible_moves, al
         value = math.inf
         for move in possible_moves:
             value = min(value, minimax(depth - 1, True, black_pieces, white_pieces, possible_moves, alpha, beta))
-            move.value = value
+            move[1].value = value
             beta = min(beta, value)
             if beta <= alpha:
                 break
