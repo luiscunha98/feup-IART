@@ -1,4 +1,4 @@
-from elements.game.main_menu.main_menu import *
+from game.elements.main_menu.main_menu import *
 
 pygame.init()
 

@@ -1,0 +1,4 @@
+- colocar o codigo no formato do dificulty.py
+- tornar o codigo mais legivel (criação de novas funções, por exemplo)
+- verificar se tudo está direito
+- colocar minimax a funcionar
