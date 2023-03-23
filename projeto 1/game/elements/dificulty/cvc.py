@@ -104,6 +104,10 @@ def cvc(main_menu, dif):
                                                     POSITIONS[index2].set_busy(True)
                                                     n_play += 1
                                         player_turn = 1
+            else:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
+                        main_menu()
 
 
         pygame.display.update()
