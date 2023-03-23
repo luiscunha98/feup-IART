@@ -2,3 +2,4 @@
 - tornar o codigo mais legivel (criação de novas funções, por exemplo)
 - verificar se tudo está direito
 - colocar minimax a funcionar
+- resolver bug (quando se joga pela 2 vez pvc ou cvc crasha => provavelmente é da função cpu_positions)

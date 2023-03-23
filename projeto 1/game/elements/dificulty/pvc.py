@@ -69,9 +69,11 @@ def pvc(main_menu, dif):
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                         main_menu()
                     else:
-                        player_turn, n_play = put_pieces(start_bpositions, PLAY_MOUSE_POS, player_turn, n_play,
+                        if n_play < 5:
+                            player_turn, n_play = put_pieces(start_bpositions, PLAY_MOUSE_POS, player_turn, n_play,
                                                          white_pieces, black_pieces)
-                        n_play, player_turn, white_pieces = cpu_positions(n_play, player_turn, start_wpositions,
+                        elif n_play >= 5:
+                            n_play, player_turn, white_pieces = cpu_positions(n_play, player_turn, start_wpositions,
                                                                           black_pieces, white_pieces, PLAY_MOUSE_POS,
                                                                           POSITIONS)
             else:

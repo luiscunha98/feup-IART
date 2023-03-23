@@ -69,10 +69,12 @@ def cvc(main_menu, dif):
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                         main_menu()
                     else:
-                        n_play, player_turn, black_pieces = cpu_positions(n_play, player_turn, start_bpositions,
+                        if n_play < 5:
+                            n_play, player_turn, black_pieces = cpu_positions(n_play, player_turn, start_bpositions,
                                                                           black_pieces, white_pieces, PLAY_MOUSE_POS,
-                                                                          POSITIONS)
-                        n_play, player_turn, white_pieces = cpu_positions(n_play, player_turn, start_wpositions,
+                                                                       POSITIONS)
+                        elif n_play >= 5:
+                            n_play, player_turn, white_pieces = cpu_positions(n_play, player_turn, start_wpositions,
                                                                           black_pieces, white_pieces, PLAY_MOUSE_POS,
                                                                           POSITIONS)
             else:
