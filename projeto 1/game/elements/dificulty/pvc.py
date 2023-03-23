@@ -1,7 +1,8 @@
-import sys, math, random
+import sys, math
 from functions.auxiliar import *
 from classes.button import *
 from functions.minimax import *
+
 
 def pvc(main_menu, dif):
     aux_pos = {}
@@ -68,39 +69,11 @@ def pvc(main_menu, dif):
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                         main_menu()
                     else:
-                        # Check if the click is within one of the positions
-                        for i in start_bpositions:
-                            if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
-                                # Check if the position is already occupied
-                                if not any(piece['position'] == POSITIONS[i].get_position() for piece in
-                                           black_pieces + white_pieces):
-                                    # Add the piece to the list
-                                    if player_turn == 1 and len(black_pieces) < 4:
-                                        color = BLACK
-                                        black_pieces.append(
-                                            {'position': POSITIONS[i].get_position(), 'color': color})
-                                        POSITIONS[i].set_busy(True)
-                                        if len(black_pieces) == 4:
-                                            player_turn = 2
-                                        n_play += 1
-                        if n_play >= 5:
-                            for i in start_wpositions:
-                                if distance(POSITIONS[i], PLAY_MOUSE_POS) < 2000:
-                                    # Check if the position is already occupied
-                                    if not any(piece['position'] == POSITIONS[i].get_position() for piece in
-                                               black_pieces + white_pieces):
-                                        # Add the piece to the list
-                                        while (player_turn == 2 and len(white_pieces) < 4):
-                                            # place a white piece randomly
-                                            index = random.randint(8, 13)
-                                            if index in {8, 9, 11, 12, 13}:
-                                                if not POSITIONS[index].busy:
-                                                    white_pieces.append(
-                                                        {'position': POSITIONS[index].get_position(), 'color': WHITE})
-                                                    POSITIONS[index].set_busy(True)
-                                        player_turn = 1
-                                        n_play += 4
-
+                        player_turn, n_play = put_pieces(start_bpositions, PLAY_MOUSE_POS, player_turn, n_play,
+                                                         white_pieces, black_pieces)
+                        n_play, player_turn, white_pieces = cpu_positions(n_play, player_turn, start_wpositions,
+                                                                          black_pieces, white_pieces, PLAY_MOUSE_POS,
+                                                                          POSITIONS)
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
@@ -111,21 +84,14 @@ def pvc(main_menu, dif):
                             if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
                                 if player_turn == 1:
                                     if click:
-                                        color = BLACK
-                                        if (selected == POSITIONS[i].poss1 and POSITIONS[i].busy == False) or (
-                                                selected == POSITIONS[i].poss2 and POSITIONS[i].busy == False) or (
-                                                selected == POSITIONS[i].poss3 and POSITIONS[i].busy == False):
-                                            black_pieces.remove(
-                                                {'position': aux_pos.get_position(), 'color': color})
-                                            aux_pos.set_busy(False)
-                                            black_pieces.append(
-                                                {'position': POSITIONS[i].get_position(), 'color': color})
-                                            POSITIONS[i].set_busy(True)
-                                            player_turn = 2
-                                        selected = None
+                                        player_turn, black_pieces, selected, aux_pos = make_move(player_turn,
+                                                                                                 POSITIONS[i],
+                                                                                                 black_pieces, selected,
+                                                                                                 aux_pos, BLACK)
                                         click = False
                                 elif player_turn == 2:
-                                    maxv = minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces), -math.inf, math.inf)
+                                    maxv = minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces),
+                                                   -math.inf, math.inf)
                                     print(maxv)
 
                                     for move in possible_moves(white_pieces):
@@ -133,10 +99,11 @@ def pvc(main_menu, dif):
                                             if move == {'position': position.get_position(), 'color': WHITE}:
                                                 if move.value == maxv:
                                                     white_pieces.append(
-                                                    {'position': move.get_position(), 'color': WHITE})
+                                                        {'position': move.get_position(), 'color': WHITE})
                                                     white_pieces[0].poss1.set_busy(True)
                                                     white_pieces[0].set_busy(False)
-                                                    white_pieces.remove({'position': white_pieces[0].get_position(), 'color': WHITE})
+                                                    white_pieces.remove(
+                                                        {'position': white_pieces[0].get_position(), 'color': WHITE})
 
                                     """for i in range(4):
                                         if maxv < minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces[i].poss1), -math.inf, math.inf) and white_pieces[i].poss1 == False:
@@ -246,7 +213,7 @@ def pvc(main_menu, dif):
                                         click = True"""
         for position in POSITIONS:
             if verify(position) == 1:
-                #game_over(player_turn)
+                # game_over(player_turn)
                 aux = {'position': position.get_position(), 'color': BLACK}
                 aux2 = {'position': position.get_position(), 'color': WHITE}
                 if player_turn == 1 and aux2 in white_pieces:

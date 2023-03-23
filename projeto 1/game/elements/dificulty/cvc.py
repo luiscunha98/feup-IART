@@ -69,41 +69,12 @@ def cvc(main_menu, dif):
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                         main_menu()
                     else:
-                        if n_play < 5:
-                            for i in start_bpositions:
-                                if distance(POSITIONS[i], PLAY_MOUSE_POS) < 2000:
-                                    # Check if the position is already occupied
-                                    if not any(piece['position'] == POSITIONS[i].get_position() for piece in
-                                               black_pieces + white_pieces):
-                                        # Add the piece to the list
-                                        while (player_turn == 1 and len(black_pieces) < 4):
-                                            # place a white piece randomly
-                                            index1 = random.randint(0, 19)
-                                            if index1 in {0, 2, 7, 18, 19}:
-                                                if not POSITIONS[index1].busy:
-                                                    black_pieces.append(
-                                                        {'position': POSITIONS[index1].get_position(), 'color': BLACK})
-                                                    POSITIONS[index1].set_busy(True)
-                                                    n_play += 1
-                                        player_turn = 2
-
-                        else:
-                            for i in start_wpositions:
-                                if distance(POSITIONS[i], PLAY_MOUSE_POS) < 2000:
-                                    # Check if the position is already occupied
-                                    if not any(piece['position'] == POSITIONS[i].get_position() for piece in
-                                               black_pieces + white_pieces):
-                                        # Add the piece to the list
-                                        while (player_turn == 2 and len(white_pieces) < 4):
-                                            # place a white piece randomly
-                                            index2 = random.randint(8, 13)
-                                            if index2 in {8, 9, 11, 12, 13}:
-                                                if not POSITIONS[index2].busy:
-                                                    white_pieces.append(
-                                                        {'position': POSITIONS[index2].get_position(), 'color': WHITE})
-                                                    POSITIONS[index2].set_busy(True)
-                                                    n_play += 1
-                                        player_turn = 1
+                        n_play, player_turn, black_pieces = cpu_positions(n_play, player_turn, start_bpositions,
+                                                                          black_pieces, white_pieces, PLAY_MOUSE_POS,
+                                                                          POSITIONS)
+                        n_play, player_turn, white_pieces = cpu_positions(n_play, player_turn, start_wpositions,
+                                                                          black_pieces, white_pieces, PLAY_MOUSE_POS,
+                                                                          POSITIONS)
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
