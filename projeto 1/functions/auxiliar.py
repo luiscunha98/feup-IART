@@ -2,7 +2,7 @@ from variables.interface import *
 from variables.constants import *
 from variables.positions import *
 
-def get_font(size):  # Returns Press-Start-2P in the desired size
+def get_font(size):  # returns Press-Start-2P in the desired size
     return pygame.font.Font("resources/assets/font.ttf", size)
 
 
