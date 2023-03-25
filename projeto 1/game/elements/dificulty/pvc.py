@@ -74,24 +74,10 @@ def pvc(main_menu, dif):
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                         main_menu()
                     else:
-                        player_turn, n_play = put_pieces(start_bpositions, PLAY_MOUSE_POS, player_turn, n_play, white_pieces, black_pieces)
-                        if n_play >= 5:
-                            for i in start_wpositions:
-                                if distance(POSITIONS[i], PLAY_MOUSE_POS) < 2000:
-                                    # Check if the position is already occupied
-                                    if not any(piece['position'] == POSITIONS[i].get_position() for piece in
-                                               black_pieces + white_pieces):
-                                        # Add the piece to the list
-                                        while (player_turn == 2 and len(white_pieces) < 4):
-                                            # place a white piece randomly
-                                            index = random.randint(8, 13)
-                                            if index in {8, 9, 11, 12, 13}:
-                                                if not POSITIONS[index].busy:
-                                                    white_pieces.append(
-                                                        {'position': POSITIONS[index].get_position(), 'color': WHITE})
-                                                    POSITIONS[index].set_busy(True)
-                                        player_turn = 1
-                                        n_play += 4
+                        if n_play < 5:
+                            player_turn, n_play = put_pieces(start_bpositions, PLAY_MOUSE_POS, player_turn, n_play, white_pieces, black_pieces)
+                elif n_play >= 5:
+                    n_play, player_turn, white_pieces = cpu_positions(n_play, player_turn, start_wpositions, black_pieces, white_pieces, PLAY_MOUSE_POS, POSITIONS)
 
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -123,10 +109,9 @@ def pvc(main_menu, dif):
                                             aux_pos = POSITIONS[i]
                                             click = True
         if player_turn == 2:
-            maxv = minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces), -math.inf, math.inf)
-            #print(maxv)
+            maxv = minimax_white(10, True, black_pieces, white_pieces, possible_moves(white_pieces, WHITE), -math.inf, math.inf)
 
-            moves = possible_moves(white_pieces)
+            moves = possible_moves(white_pieces, WHITE)
             for move in moves:
                 if move[1].value == maxv:
                     white_pieces.append({'position': move[1].get_position(), 'color': WHITE})
@@ -137,109 +122,8 @@ def pvc(main_menu, dif):
                     player_turn = 1
                     break
 
-                    """for i in range(4):
-                                        if maxv < minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces[i].poss1), -math.inf, math.inf) and white_pieces[i].poss1 == False:
-                                            maxv = minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces[i].poss1), -math.inf, math.inf)
-                                            aux = str(i) + "1"
-                                        elif maxv < minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces[i].poss2), -math.inf, math.inf) and white_pieces[i].poss2 == False:
-                                            maxv = minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces[i].poss2), -math.inf, math.inf)
-                                            aux = str(i) + "2"
-                                        elif maxv < minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces[i].poss3), -math.inf, math.inf) and white_pieces[i].poss3 == False:
-                                            maxv = minimax(dif, True, black_pieces, white_pieces, possible_moves(white_pieces[i].poss3), -math.inf, math.inf)
-                                            aux = str(i) + "3"
-                                    if aux == "01":
-                                        white_pieces.append(
-                                            {'position': white_pieces[0].poss1, 'color': WHITE})
-                                        white_pieces[0].poss1.set_busy(True)
-                                        white_pieces[0].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[0].get_position(), 'color': WHITE})
-                                    elif aux == "02":
-                                        white_pieces.append(
-                                            {'position': white_pieces[0].poss2, 'color': WHITE})
-                                        white_pieces[0].poss2.set_busy(True)
-                                        white_pieces[0].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[0].get_position(), 'color': WHITE})
-                                    elif aux == "03":
-                                        white_pieces.append(
-                                            {'position': white_pieces[0].poss3, 'color': WHITE})
-                                        white_pieces[0].poss3.set_busy(True)
-                                        white_pieces[0].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[0].get_position(), 'color': WHITE})
-                                    elif aux == "11":
-                                        white_pieces.append(
-                                            {'position': white_pieces[1].poss1, 'color': WHITE})
-                                        white_pieces[1].poss1.set_busy(True)
-                                        white_pieces[1].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[1].get_position(), 'color': WHITE})
-                                    elif aux == "12":
-                                        white_pieces.append(
-                                            {'position': white_pieces[1].poss2, 'color': WHITE})
-                                        white_pieces[1].poss2.set_busy(True)
-                                        white_pieces[1].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[1].get_position(), 'color': WHITE})
-                                    elif aux == "13":
-                                        white_pieces.append(
-                                            {'position': white_pieces[1].poss3, 'color': WHITE})
-                                        white_pieces[1].poss3.set_busy(True)
-                                        white_pieces[1].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[1].get_position(), 'color': WHITE})
-                                    elif aux == "21":
-                                        white_pieces.append(
-                                            {'position': white_pieces[2].poss1, 'color': WHITE})
-                                        white_pieces[2].poss1.set_busy(True)
-                                        white_pieces[2].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[2].get_position(), 'color': WHITE})
-                                    elif aux == "22":
-                                        white_pieces.append(
-                                            {'position': white_pieces[2].poss2, 'color': WHITE})
-                                        white_pieces[2].poss2.set_busy(True)
-                                        white_pieces[2].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[2].get_position(), 'color': WHITE})
-                                    elif aux == "23":
-                                        white_pieces.append(
-                                            {'position': white_pieces[2].poss3, 'color': WHITE})
-                                        white_pieces[2].poss3.set_busy(True)
-                                        white_pieces[2].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[2].get_position(), 'color': WHITE})
-                                    elif aux == "31":
-                                        white_pieces.append(
-                                            {'position': white_pieces[3].poss1, 'color': WHITE})
-                                        white_pieces[3].poss1.set_busy(True)
-                                        white_pieces[3].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[3].get_position(), 'color': WHITE})
-                                    elif aux == "32":
-                                        white_pieces.append(
-                                            {'position': white_pieces[3].poss2, 'color': WHITE})
-                                        white_pieces[3].poss2.set_busy(True)
-                                        white_pieces[3].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[3].get_position(), 'color': WHITE})
-                                    elif aux == "33":
-                                        white_pieces.append(
-                                            {'position': white_pieces[3].poss3, 'color': WHITE})
-                                        white_pieces[3].poss3.set_busy(True)
-                                        white_pieces[3].set_busy(False)
-                                        white_pieces.remove({'position': white_pieces[3].get_position(), 'color': WHITE})
-                                    color = WHITE
-                                    if (selected == POSITIONS[i].poss1 and POSITIONS[i].busy == False) or (
-                                            selected == POSITIONS[i].poss2 and POSITIONS[i].busy == False) or (
-                                            selected == POSITIONS[i].poss3 and POSITIONS[i].busy == False):
-                                        white_pieces.remove(
-                                            {'position': aux_pos.get_position(), 'color': color})
-                                        aux_pos.set_busy(False)
-                                        white_pieces.append(
-                                            {'position': POSITIONS[i].get_position(), 'color': color})
-                                        POSITIONS[i].set_busy(True)
-                                        player_turn = 1
-                                    selected = None"""
-                """elif player_turn == 2:
-                                    if any(piece['position'] == POSITIONS[i].get_position() for piece in
-                                           white_pieces):
-                                        selected = POSITIONS[i]
-                                        aux_pos = POSITIONS[i]
-                                        click = True"""
         for position in POSITIONS:
             if verify(position) == 1:
-                #game_over(player_turn)
                 aux = {'position': position.get_position(), 'color': BLACK}
                 aux2 = {'position': position.get_position(), 'color': WHITE}
                 if player_turn == 1 and aux2 in white_pieces:
