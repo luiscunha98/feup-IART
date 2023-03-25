@@ -10,7 +10,7 @@ def pvp(main_menu):
     selected = None
     click = False
     n_play = 1
-    player_turn = 1  # Player 1 goes first
+    player_turn = 1  # Player 1 go first
     black_pieces = []
     white_pieces = []
     p1wins = 0
@@ -39,11 +39,11 @@ def pvp(main_menu):
         start_wpositions = {8, 9, 11, 12, 13}
 
         # draw possible start positions
-        if len(black_pieces) != 4:
+        if n_play < 5 and len(black_pieces) != 4:
             for i in start_bpositions:
                 pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
 
-        if player_turn == 2 and len(white_pieces) != 4:
+        if n_play >= 5 and len(white_pieces) != 4:
             for i in start_wpositions:
                 pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
 
@@ -82,7 +82,6 @@ def pvp(main_menu):
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                         main_menu()
                     else:
-                        # Check if the click is within one of the positions
                         for i in range(20):
                             if distance(POSITIONS[i], PLAY_MOUSE_POS) < PIECE_RADIUS:
                                 if click:
@@ -101,5 +100,6 @@ def pvp(main_menu):
                                     selected, aux_pos, click = change_positions(POSITIONS[i], white_pieces, selected, aux_pos, click)
 
             # game over
-            p1wins, p2wins, white_pieces, black_pieces, n_play, aux_pos, selected, click = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click)
+            p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click)
+
         pygame.display.update()

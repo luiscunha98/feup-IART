@@ -1,44 +1,48 @@
-import sys, math, random
-from functions.auxiliar import *
 from classes.button import *
-from functions.minimax import *
+from functions.dificulty import *
 
 
 def cvc(main_menu, dif):
+
+    # local variables
     aux_pos = {}
     selected = None
     click = False
     n_play = 1
-    player_turn = 1  # Player 1 goes first
+    player_turn = 1  # Player 1 go first
     black_pieces = []
     white_pieces = []
     p1wins = 0
     p2wins = 0
+
     while True:
+
+        #base
         SCREEN.blit(BG, (0, 0))
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
         BOARD = pygame.image.load("resources/images/Board.png")
         SCREEN.blit(BOARD, (340, 100))
-        PLAY_TEXT = get_font(35).render("PLAYER VS PLAYER", True, "White")
+        PLAY_TEXT = get_font(35).render("COMPUTER VS COMPUTER", True, "White")
         SCORE_TEXT = get_font(25).render("SCORE", True, "White")
-        PLAYER1_TEXT = get_font(20).render("PLAYER 1: " + str(p1wins), True, "White")
-        PLAYER2_TEXT = get_font(20).render("PLAYER 2: " + str(p2wins), True, "White")
+        PLAYER1_TEXT = get_font(20).render("COMPUTER 1: " + str(p1wins), True, "White")
+        PLAYER2_TEXT = get_font(20).render("COMPUTER 2: " + str(p2wins), True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
-        SCORE_RECT = PLAY_TEXT.get_rect(center=(400, 150))
-        PLAYER1_RECT = PLAY_TEXT.get_rect(center=(350, 200))
-        PLAYER2_RECT = PLAY_TEXT.get_rect(center=(350, 250))
-
+        SCORE_RECT = PLAY_TEXT.get_rect(center=(450, 150))
+        PLAYER1_RECT = PLAY_TEXT.get_rect(center=(400, 200))
+        PLAYER2_RECT = PLAY_TEXT.get_rect(center=(400, 250))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
         SCREEN.blit(SCORE_TEXT, SCORE_RECT)
         SCREEN.blit(PLAYER1_TEXT, PLAYER1_RECT)
         SCREEN.blit(PLAYER2_TEXT, PLAYER2_RECT)
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
-        if (len(black_pieces) != 4):
+
+        # draw possible start positions
+        if n_play < 5 and len(black_pieces) != 4:
             for i in start_bpositions:
                 pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
 
-        if player_turn == 2 and len(white_pieces) != 4:
+        if n_play >= 5 and len(white_pieces) != 4:
             for i in start_wpositions:
                 pygame.draw.circle(SCREEN, BLUE, (POSITIONS[i].get_position()), PIECE_RADIUS)
 
@@ -55,88 +59,38 @@ def cvc(main_menu, dif):
             if selected.poss3.busy is False:
                 pygame.draw.circle(SCREEN, BLUE, selected.poss3.get_position(), PIECE_RADIUS)
 
-        PLAY_BACK = Button(image=None, pos=(175, 625),
-                           text_input="QUIT GAME", font=get_font(35), base_color="White", hovering_color="Red")
-
+        # button definition, hover changes and update
+        PLAY_BACK = Button(image=None, pos=(175, 625), text_input="QUIT GAME", font=get_font(35), base_color="White", hovering_color="Red")
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
 
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if n_play < 9:  # Players put all of their pieces in the board first
+            quit_game(event)
+
+            # players put all of their pieces in the board first
+            if n_play < 9:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                         main_menu()
                     else:
                         if n_play < 5:
-                            n_play, player_turn, black_pieces = cpu_positions(n_play, player_turn, start_bpositions,
-                                                                              black_pieces, white_pieces,
-                                                                              PLAY_MOUSE_POS, POSITIONS)
+                            n_play, player_turn, black_pieces = cpu_positions(n_play, player_turn, start_bpositions, black_pieces, white_pieces, PLAY_MOUSE_POS, POSITIONS)
                         elif n_play >= 5:
-                            n_play, player_turn, white_pieces = cpu_positions(n_play, player_turn, start_wpositions,
-                                                                              black_pieces, white_pieces,
-                                                                              PLAY_MOUSE_POS,
-                                                                              POSITIONS)
+                            n_play, player_turn, white_pieces = cpu_positions(n_play, player_turn, start_wpositions, black_pieces, white_pieces, PLAY_MOUSE_POS, POSITIONS)
+
             else:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                         main_menu()
                     else:
+
+                        # cpu movements
                         if player_turn == 1:
-                            maxv = minimax_black(3, True, black_pieces, white_pieces, possible_moves(black_pieces, BLACK),
-                                                 -math.inf, math.inf)
-
-                            moves = possible_moves(black_pieces, BLACK)
-                            for move in moves:
-                                if move[1].value == maxv:
-                                    black_pieces.append({'position': move[1].get_position(), 'color': BLACK})
-                                    move[1].set_busy(True)
-                                    position_to_remove = move[0].get_position()
-                                    black_pieces.remove({'position': position_to_remove, 'color': BLACK})
-                                    move[0].set_busy(False)
-                                    player_turn = 2
-                                    break
-
+                            player_turn, black_pieces = cpu_movements(player_turn, dif, black_pieces, white_pieces)
                         elif player_turn == 2:
-                            maxv = minimax_white(3, True, black_pieces, white_pieces, possible_moves(white_pieces, WHITE),
-                                                 -math.inf,
-                                                 math.inf)
+                            player_turn, white_pieces = cpu_movements(player_turn, dif, black_pieces, white_pieces)
 
-                            moves = possible_moves(white_pieces, WHITE)
-                            for move in moves:
-                                if move[1].value == maxv:
-                                    white_pieces.append({'position': move[1].get_position(), 'color': WHITE})
-                                    move[1].set_busy(True)
-                                    position_to_remove = move[0].get_position()
-                                    white_pieces.remove({'position': position_to_remove, 'color': WHITE})
-                                    move[0].set_busy(False)
-                                    player_turn = 1
-                                    break
-                            print(player_turn)
-
-                        for position in POSITIONS:
-                            if verify(position) == 1:
-                                aux = {'position': position.get_position(), 'color': BLACK}
-                                aux2 = {'position': position.get_position(), 'color': WHITE}
-                                if player_turn == 1 and aux2 in white_pieces:
-                                    p1wins += 1
-                                elif player_turn == 1 and aux in black_pieces:
-                                    p2wins += 1
-                                elif player_turn == 2 and aux2 in white_pieces:
-                                    p1wins += 1
-                                elif player_turn == 2 and aux in black_pieces:
-                                    p2wins += 1
-                                n_play = 1
-                                player_turn = 1
-                                black_pieces = []
-                                white_pieces = []
-                                aux_pos = {}
-                                selected = None
-                                click = False
-                                for pos in POSITIONS:
-                                    pos.set_busy(False)
-
+            # game over
+            p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click)
 
         pygame.display.update()
