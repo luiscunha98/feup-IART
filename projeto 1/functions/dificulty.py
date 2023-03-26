@@ -30,8 +30,7 @@ def put_pieces(positions, PLAY_MOUSE_POS, player_turn, n_play, white_pieces, bla
             if not any(piece['position'] == POSITIONS[i].get_position() for piece in black_pieces + white_pieces):
 
                 if player_turn == 1 and len(black_pieces) < 4:
-                    color = BLACK
-                    black_pieces.append({'position': POSITIONS[i].get_position(), 'color': color})
+                    black_pieces.append({'position': POSITIONS[i].get_position(), 'color': BLACK})
                     POSITIONS[i].set_busy(True)
                     if len(black_pieces) == 4:
                         player_turn = 2

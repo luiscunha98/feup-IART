@@ -96,8 +96,9 @@ def pvc(main_menu, dif):
                                 if player_turn == 1:
                                     selected, aux_pos, click = change_positions(POSITIONS[i], black_pieces, selected, aux_pos, click)
 
-        # cpu movements
-        player_turn, white_pieces = cpu_movements(player_turn, dif, black_pieces, white_pieces)
+                                # cpu movements
+                                if player_turn == 2:
+                                    player_turn, white_pieces = cpu_movements(player_turn, dif, black_pieces, white_pieces)
 
         # game over
         p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click)
