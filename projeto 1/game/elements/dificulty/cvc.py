@@ -14,6 +14,7 @@ def cvc(main_menu, dif):
     white_pieces = []
     p1wins = 0
     p2wins = 0
+    moves = 0
 
     while True:
 
@@ -26,14 +27,17 @@ def cvc(main_menu, dif):
         SCORE_TEXT = get_font(25).render("SCORE", True, "White")
         PLAYER1_TEXT = get_font(20).render("COMPUTER 1: " + str(p1wins), True, "White")
         PLAYER2_TEXT = get_font(20).render("COMPUTER 2: " + str(p2wins), True, "White")
+        MOVES_TEXT = get_font(20).render("MOVES: " + str(moves), True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
         SCORE_RECT = PLAY_TEXT.get_rect(center=(450, 150))
         PLAYER1_RECT = PLAY_TEXT.get_rect(center=(400, 200))
         PLAYER2_RECT = PLAY_TEXT.get_rect(center=(400, 250))
+        MOVES_RECT = PLAY_TEXT.get_rect(center=(450, 550))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
         SCREEN.blit(SCORE_TEXT, SCORE_RECT)
         SCREEN.blit(PLAYER1_TEXT, PLAYER1_RECT)
         SCREEN.blit(PLAYER2_TEXT, PLAYER2_RECT)
+        SCREEN.blit(MOVES_TEXT, MOVES_RECT)
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
 
@@ -86,11 +90,11 @@ def cvc(main_menu, dif):
 
                         # cpu movements
                         if player_turn == 1:
-                            player_turn, black_pieces = cpu_movements(player_turn, dif, black_pieces, white_pieces)
+                            player_turn, black_pieces, moves = cpu_movements(player_turn, dif, black_pieces, white_pieces, moves)
                         elif player_turn == 2:
-                            player_turn, white_pieces = cpu_movements(player_turn, dif, black_pieces, white_pieces)
+                            player_turn, white_pieces, moves = cpu_movements(player_turn, dif, black_pieces, white_pieces, moves)
 
             # game over
-            p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click)
+            p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click, moves = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click,moves)
 
         pygame.display.update()

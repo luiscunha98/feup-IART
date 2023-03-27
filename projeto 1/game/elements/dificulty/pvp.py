@@ -33,7 +33,7 @@ def pvp(main_menu):
         SCORE_RECT = PLAY_TEXT.get_rect(center=(400, 150))
         PLAYER1_RECT = PLAY_TEXT.get_rect(center=(350, 200))
         PLAYER2_RECT = PLAY_TEXT.get_rect(center=(350, 250))
-        MOVES_RECT = PLAY_TEXT.get_rect(center=(400, 550))
+        MOVES_RECT = PLAY_TEXT.get_rect(center=(390, 550))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
         SCREEN.blit(SCORE_TEXT, SCORE_RECT)
         SCREEN.blit(PLAYER1_TEXT, PLAYER1_RECT)
@@ -106,6 +106,6 @@ def pvp(main_menu):
                                     selected, aux_pos, click = change_positions(POSITIONS[i], white_pieces, selected, aux_pos, click)
 
             # game over
-            p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click)
+            p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click, moves = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click, moves)
 
         pygame.display.update()

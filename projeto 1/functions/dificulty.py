@@ -75,7 +75,7 @@ def change_positions(position, pieces, selected, aux_pos, click):
     return selected, aux_pos, click
 
 
-def game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click):
+def game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click, moves):
     for position in POSITIONS:
         if verify(position) == 1:
             aux = {'position': position.get_position(), 'color': BLACK}
@@ -99,10 +99,11 @@ def game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS
             aux_pos = {}
             selected = None
             click = False
+            moves= 0
             for pos in POSITIONS:
                 pos.set_busy(False)
 
-    return p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click
+    return p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click, moves
 
 
 def quit_game(event):
@@ -139,7 +140,7 @@ def cpu_positions(n_play, player_turn, positions, black_pieces, white_pieces, PL
         return n_play + 4, player_turn, white_pieces
 
 
-def cpu_movements(player_turn, dif, black_pieces, white_pieces):
+def cpu_movements(player_turn, dif, black_pieces, white_pieces, moves2):
     if player_turn == 1:
         maxv = minimax_black(dif, True, black_pieces, white_pieces, possible_moves(black_pieces, BLACK),
                              -math.inf, math.inf)
@@ -154,7 +155,8 @@ def cpu_movements(player_turn, dif, black_pieces, white_pieces):
                 move[0].set_busy(False)
                 player_turn = 2
                 break
-        return player_turn, black_pieces
+        moves2 += 1
+        return player_turn, black_pieces, moves2
 
     elif player_turn == 2:
         maxv = minimax_white(dif, True, black_pieces, white_pieces, possible_moves(white_pieces, WHITE), -math.inf,
@@ -170,7 +172,8 @@ def cpu_movements(player_turn, dif, black_pieces, white_pieces):
                 move[0].set_busy(False)
                 player_turn = 1
                 break
-        return player_turn, white_pieces
+        moves2 += 1
+        return player_turn, white_pieces, moves2
 
 
 def utility(white_pieces, black_pieces):
