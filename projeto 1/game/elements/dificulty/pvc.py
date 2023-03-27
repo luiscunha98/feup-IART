@@ -27,7 +27,7 @@ def pvc(main_menu, dif):
         RECTANGLE_TEXT = pygame.image.load("resources/images/rectangle.png")
         BUTTON_TEXT = pygame.image.load("resources/images/button.png")
         SCORE_TEXT = get_font(25).render("SCORE", True, "White")
-        PLAYER1_TEXT = get_font(20).render(" PLAYER : " + str(p1wins), True, "White")
+        PLAYER1_TEXT = get_font(20).render(" PLAYER : " + str(p1wins), True, "black")
         PLAYER2_TEXT = get_font(20).render("COMPUTER: " + str(p2wins), True, "White")
         MOVES_TEXT = get_font(20).render("MOVES: " + str(moves), True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))

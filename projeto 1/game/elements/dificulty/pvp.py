@@ -29,7 +29,7 @@ def pvp(main_menu):
         RECTANGLE_TEXT = pygame.image.load("resources/images/rectangle.png")
         BUTTON_TEXT = pygame.image.load("resources/images/button.png")
         SCORE_TEXT = get_font(25).render("SCORE", True, "White")
-        PLAYER1_TEXT = get_font(20).render("PLAYER 1: " + str(p1wins), True, "White")
+        PLAYER1_TEXT = get_font(20).render("PLAYER 1: " + str(p1wins), True, "Black")
         PLAYER2_TEXT = get_font(20).render("PLAYER 2: " + str(p2wins), True, "White")
         MOVES_TEXT = get_font(20).render("MOVES: " + str(moves), True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
