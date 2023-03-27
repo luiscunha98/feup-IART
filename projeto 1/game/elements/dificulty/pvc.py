@@ -23,21 +23,27 @@ def pvc(main_menu, dif):
         PLAY_MOUSE_POS = pygame.mouse.get_pos()
         BOARD = pygame.image.load("resources/images/Board.png")
         SCREEN.blit(BOARD, (340, 100))
-        PLAY_TEXT = get_font(35).render("PLAYER VS COMPUTER", True, "White")
+        PLAY_TEXT = pygame.image.load("resources/images/PVC.png")
+        RECTANGLE_TEXT = pygame.image.load("resources/images/rectangle.png")
+        BUTTON_TEXT = pygame.image.load("resources/images/button.png")
         SCORE_TEXT = get_font(25).render("SCORE", True, "White")
         PLAYER1_TEXT = get_font(20).render(" PLAYER : " + str(p1wins), True, "White")
         PLAYER2_TEXT = get_font(20).render("COMPUTER: " + str(p2wins), True, "White")
         MOVES_TEXT = get_font(20).render("MOVES: " + str(moves), True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
-        SCORE_RECT = PLAY_TEXT.get_rect(center=(400, 150))
-        PLAYER1_RECT = PLAY_TEXT.get_rect(center=(350, 200))
-        PLAYER2_RECT = PLAY_TEXT.get_rect(center=(350, 250))
-        MOVES_RECT = PLAY_TEXT.get_rect(center=(420, 550))
+        RECTANGLE_RECT = PLAY_TEXT.get_rect(center=(10, 80))
+        SCORE_RECT = PLAY_TEXT.get_rect(center=(325, 160))
+        PLAYER1_RECT = PLAY_TEXT.get_rect(center=(300, 210))
+        PLAYER2_RECT = PLAY_TEXT.get_rect(center=(300, 260))
+        MOVES_RECT = PLAY_TEXT.get_rect(center=(330, 580))
+        BUTTON_RECT = PLAY_TEXT.get_rect(center=(230, 545))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
         SCREEN.blit(SCORE_TEXT, SCORE_RECT)
         SCREEN.blit(PLAYER1_TEXT, PLAYER1_RECT)
         SCREEN.blit(PLAYER2_TEXT, PLAYER2_RECT)
         SCREEN.blit(MOVES_TEXT,MOVES_RECT)
+        SCREEN.blit(RECTANGLE_TEXT,RECTANGLE_RECT)
+        SCREEN.blit(BUTTON_TEXT,BUTTON_RECT)
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
 
@@ -64,7 +70,7 @@ def pvc(main_menu, dif):
                 pygame.draw.circle(SCREEN, BLUE, selected.poss3.get_position(), PIECE_RADIUS)
 
         # button definition, hover changes and update
-        PLAY_BACK = Button(image=None, pos=(175, 625), text_input="QUIT GAME", font=get_font(35), base_color="White", hovering_color="Red")
+        PLAY_BACK = Button(image=None, pos=(175, 625), text_input="QUIT GAME", font=get_font(30), base_color="White", hovering_color="Red")
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
 
