@@ -1,7 +1,6 @@
 from classes.button import *
 from functions.dificulty import *
 
-
 def cvc(main_menu, dif):
 
     # local variables
@@ -90,9 +89,21 @@ def cvc(main_menu, dif):
 
                         # cpu movements
                         if player_turn == 1:
-                            player_turn, black_pieces, moves = cpu_movements(player_turn, dif, black_pieces, white_pieces, moves)
+                            """if(dif == 1):
+                                index = random.randint(2,4)
+                            elif(dif == 2):
+                                index = random.randint(4,6)
+                            elif(dif == 3):
+                                index = random.randint(6,8)"""
+                            player_turn, black_pieces, moves = cpu_movements(player_turn, 7, black_pieces, white_pieces, moves)
                         elif player_turn == 2:
-                            player_turn, white_pieces, moves = cpu_movements(player_turn, dif, black_pieces, white_pieces, moves)
+                            """if(dif == 1):
+                                index = random.randint(2,4)
+                            elif(dif == 2):
+                                index = random.randint(4,6)
+                            elif(dif == 3):
+                                index = random.randint(6,8)"""
+                            player_turn, white_pieces, moves = cpu_movements(player_turn, 2, black_pieces, white_pieces, moves)
 
             # game over
             p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click, moves = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click,moves)
