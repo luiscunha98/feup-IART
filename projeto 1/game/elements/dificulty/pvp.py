@@ -15,6 +15,7 @@ def pvp(main_menu):
     white_pieces = []
     p1wins = 0
     p2wins = 0
+    moves = 0
 
     while True:
 
@@ -27,14 +28,17 @@ def pvp(main_menu):
         SCORE_TEXT = get_font(25).render("SCORE", True, "White")
         PLAYER1_TEXT = get_font(20).render("PLAYER 1: " + str(p1wins), True, "White")
         PLAYER2_TEXT = get_font(20).render("PLAYER 2: " + str(p2wins), True, "White")
+        MOVES_TEXT = get_font(20).render("MOVES: " + str(moves), True, "White")
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
         SCORE_RECT = PLAY_TEXT.get_rect(center=(400, 150))
         PLAYER1_RECT = PLAY_TEXT.get_rect(center=(350, 200))
         PLAYER2_RECT = PLAY_TEXT.get_rect(center=(350, 250))
+        MOVES_RECT = PLAY_TEXT.get_rect(center=(400, 550))
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
         SCREEN.blit(SCORE_TEXT, SCORE_RECT)
         SCREEN.blit(PLAYER1_TEXT, PLAYER1_RECT)
         SCREEN.blit(PLAYER2_TEXT, PLAYER2_RECT)
+        SCREEN.blit(MOVES_TEXT,MOVES_RECT)
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
 
@@ -89,8 +93,10 @@ def pvp(main_menu):
                                     # make_move
                                     if player_turn == 1:
                                         player_turn, black_pieces, selected, aux_pos = make_move(player_turn, POSITIONS[i], black_pieces, selected, aux_pos, BLACK)
+                                        moves+=1
                                     elif player_turn == 2:
                                         player_turn, white_pieces, selected, aux_pos = make_move(player_turn, POSITIONS[i], white_pieces, selected, aux_pos, WHITE)
+                                        moves+=1
                                     click = False
 
                                 # change positions of selected and aux_pos

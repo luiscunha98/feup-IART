@@ -14,6 +14,7 @@ def pvc(main_menu, dif):
     white_pieces = []
     p1wins = 0
     p2wins = 0
+    moves = 0
 
     while True:
 
