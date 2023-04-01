@@ -32,13 +32,17 @@ def pvp(main_menu):
         PLAYER1_TEXT = get_font(20).render("PLAYER 1: " + str(p1wins), True, "Black")
         PLAYER2_TEXT = get_font(20).render("PLAYER 2: " + str(p2wins), True, "White")
         MOVES_TEXT = get_font(20).render("MOVES: " + str(moves), True, "White")
+        PLAYER_TURN_TEXT = get_font(20).render("TURN: " + str(player_turn), True, "White")
+
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
         RECTANGLE_RECT = PLAY_TEXT.get_rect(center=(-20, 85))
         SCORE_RECT = PLAY_TEXT.get_rect(center=(300, 175))
         PLAYER1_RECT = PLAY_TEXT.get_rect(center=(260, 225))
         PLAYER2_RECT = PLAY_TEXT.get_rect(center=(260, 275))
-        MOVES_RECT = PLAY_TEXT.get_rect(center=(300, 580))
+        MOVES_RECT = MOVES_TEXT.get_rect(center=(1100, 200))
         BUTTON_RECT = PLAY_TEXT.get_rect(center=(205, 545))
+        TURN_RECT = PLAYER_TURN_TEXT.get_rect(center=(1100, 150))
+
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
         SCREEN.blit(SCORE_TEXT, SCORE_RECT)
         SCREEN.blit(PLAYER1_TEXT, PLAYER1_RECT)
@@ -46,6 +50,8 @@ def pvp(main_menu):
         SCREEN.blit(MOVES_TEXT,MOVES_RECT)
         SCREEN.blit(RECTANGLE_TEXT,RECTANGLE_RECT)
         SCREEN.blit(BUTTON_TEXT,BUTTON_RECT)
+        SCREEN.blit(PLAYER_TURN_TEXT, TURN_RECT)
+
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
 

@@ -33,7 +33,8 @@ def play(main_menu):
                 if PLAYER_VS_CPU.checkForInput(PLAY_MOUSE_POS):
                     difficulty(main_menu, play, PVC)
                 if CPU_VS_CPU.checkForInput(PLAY_MOUSE_POS):
-                    difficulty(main_menu, play, CVC)
+                    dif1 = difficulty1(main_menu, play)
+                    difficulty2(main_menu, play, dif1)
                 if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                     main_menu()
 

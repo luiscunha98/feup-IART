@@ -30,13 +30,15 @@ def pvc(main_menu, dif):
         PLAYER1_TEXT = get_font(20).render(" PLAYER : " + str(p1wins), True, "black")
         PLAYER2_TEXT = get_font(20).render("COMPUTER: " + str(p2wins), True, "White")
         MOVES_TEXT = get_font(20).render("MOVES: " + str(moves), True, "White")
+
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
         RECTANGLE_RECT = PLAY_TEXT.get_rect(center=(10, 80))
         SCORE_RECT = PLAY_TEXT.get_rect(center=(325, 160))
         PLAYER1_RECT = PLAY_TEXT.get_rect(center=(300, 210))
         PLAYER2_RECT = PLAY_TEXT.get_rect(center=(300, 260))
-        MOVES_RECT = PLAY_TEXT.get_rect(center=(330, 580))
+        MOVES_RECT = MOVES_TEXT.get_rect(center=(1100, 200))
         BUTTON_RECT = PLAY_TEXT.get_rect(center=(230, 545))
+
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
         SCREEN.blit(SCORE_TEXT, SCORE_RECT)
         SCREEN.blit(PLAYER1_TEXT, PLAYER1_RECT)
@@ -44,6 +46,7 @@ def pvc(main_menu, dif):
         SCREEN.blit(MOVES_TEXT,MOVES_RECT)
         SCREEN.blit(RECTANGLE_TEXT,RECTANGLE_RECT)
         SCREEN.blit(BUTTON_TEXT,BUTTON_RECT)
+
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
 
@@ -108,7 +111,7 @@ def pvc(main_menu, dif):
 
                                 # cpu movements
                                 if player_turn == 2:
-                                    player_turn, white_pieces, moves = cpu_movements(player_turn, dif, black_pieces, white_pieces, moves)
+                                    player_turn, white_pieces, moves = cpu_movements(player_turn, dif*2, black_pieces, white_pieces, moves)
 
         # game over
         p1wins, p2wins, white_pieces, black_pieces, n_play, player_turn, aux_pos, selected, click, moves = game_over(player_turn, p1wins, p2wins, white_pieces, black_pieces, POSITIONS, n_play, aux_pos, selected, click,moves)
