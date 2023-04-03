@@ -12,9 +12,9 @@ def main_menu():
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
         # button definition
-        PLAY_BUTTON = Button(None, pos=(640, 375), text_input="PLAY", font=get_font(100), base_color="White", hovering_color="Red")
-        INSTRUCTIONS_BUTTON = Button(None, pos=(640, 500), text_input="INSTRUCTIONS", font=get_font(30), base_color="White", hovering_color="Red")
-        QUIT_BUTTON = Button(None, pos=(640, 600), text_input="QUIT GAME", font=get_font(30), base_color="White", hovering_color="Red")
+        PLAY_BUTTON = Button(None, pos=(640, 375), text_input="PLAY", font=get_font(100), base_color="White", hovering_color="#DD0000")
+        INSTRUCTIONS_BUTTON = Button(None, pos=(640, 500), text_input="INSTRUCTIONS", font=get_font(30), base_color="White", hovering_color="#DD0000")
+        QUIT_BUTTON = Button(None, pos=(640, 600), text_input="QUIT GAME", font=get_font(30), base_color="White", hovering_color="#DD0000")
 
         # button hover changes and update
         for button in [PLAY_BUTTON, INSTRUCTIONS_BUTTON, QUIT_BUTTON]:

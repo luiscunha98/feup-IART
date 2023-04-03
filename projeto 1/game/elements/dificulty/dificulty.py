@@ -23,10 +23,10 @@ def difficulty(main_menu, play, mode):
 
 
             #button definition
-            EASY = Button(image=None, pos=(300, 250), text_input="EASY", font=get_font(35), base_color="White", hovering_color="Red")
-            MEDIUM = Button(image=None, pos=(335, 350), text_input="MEDIUM", font=get_font(35), base_color="White", hovering_color="Red")
-            HARD = Button(image=None, pos=(300, 450), text_input="HARD", font=get_font(35), base_color="White", hovering_color="Red")
-            PLAY_BACK = Button(image=None, pos=(640, 600), text_input="BACK", font=get_font(50), base_color="White", hovering_color="Red")
+            EASY = Button(image=None, pos=(300, 250), text_input="EASY", font=get_font(35), base_color="White", hovering_color="#DD0000")
+            MEDIUM = Button(image=None, pos=(335, 350), text_input="MEDIUM", font=get_font(35), base_color="White", hovering_color="#DD0000")
+            HARD = Button(image=None, pos=(300, 450), text_input="HARD", font=get_font(35), base_color="White", hovering_color="#DD0000")
+            PLAY_BACK = Button(image=None, pos=(640, 600), text_input="BACK", font=get_font(50), base_color="White", hovering_color="#DD0000")
 
             #button hover changes and update
             for button in [EASY, MEDIUM, HARD, PLAY_BACK]:
@@ -60,10 +60,10 @@ def difficulty1(main_menu, play):
 
 
         #button definition
-        EASY = Button(image=None, pos=(300, 250), text_input="EASY", font=get_font(35), base_color="White", hovering_color="Red")
-        MEDIUM = Button(image=None, pos=(335, 350), text_input="MEDIUM", font=get_font(35), base_color="White", hovering_color="Red")
-        HARD = Button(image=None, pos=(300, 450), text_input="HARD", font=get_font(35), base_color="White", hovering_color="Red")
-        PLAY_BACK = Button(image=None, pos=(640, 600), text_input="BACK", font=get_font(50), base_color="White", hovering_color="Red")
+        EASY = Button(image=None, pos=(300, 250), text_input="EASY", font=get_font(35), base_color="White", hovering_color="#DD0000")
+        MEDIUM = Button(image=None, pos=(335, 350), text_input="MEDIUM", font=get_font(35), base_color="White", hovering_color="#DD0000")
+        HARD = Button(image=None, pos=(300, 450), text_input="HARD", font=get_font(35), base_color="White", hovering_color="#DD0000")
+        PLAY_BACK = Button(image=None, pos=(640, 600), text_input="BACK", font=get_font(50), base_color="White", hovering_color="#DD0000")
 
         #button hover changes and update
         for button in [EASY, MEDIUM, HARD, PLAY_BACK]:
@@ -95,10 +95,10 @@ def difficulty2(main_menu, play, dif1):
 
 
         #button definition
-        EASY = Button(image=None, pos=(300, 250), text_input="EASY", font=get_font(35), base_color="White", hovering_color="Red")
-        MEDIUM = Button(image=None, pos=(335, 350), text_input="MEDIUM", font=get_font(35), base_color="White", hovering_color="Red")
-        HARD = Button(image=None, pos=(300, 450), text_input="HARD", font=get_font(35), base_color="White", hovering_color="Red")
-        PLAY_BACK = Button(image=None, pos=(640, 600), text_input="BACK", font=get_font(50), base_color="White", hovering_color="Red")
+        EASY = Button(image=None, pos=(300, 250), text_input="EASY", font=get_font(35), base_color="White", hovering_color="#DD0000")
+        MEDIUM = Button(image=None, pos=(335, 350), text_input="MEDIUM", font=get_font(35), base_color="White", hovering_color="#DD0000")
+        HARD = Button(image=None, pos=(300, 450), text_input="HARD", font=get_font(35), base_color="White", hovering_color="#DD0000")
+        PLAY_BACK = Button(image=None, pos=(640, 600), text_input="BACK", font=get_font(50), base_color="White", hovering_color="#DD0000")
 
         #button hover changes and update
         for button in [EASY, MEDIUM, HARD, PLAY_BACK]:

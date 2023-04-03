@@ -11,6 +11,11 @@ def render_multi_line(text, x, y, fsize):
     for i, l in enumerate(lines):
         SCREEN.blit(get_font(20).render(l, 0, "White"), (x, y + fsize * 2 * i))
 
+def render_multi_line2(text, x, y, fsize):
+    lines = text.splitlines()
+    for i, l in enumerate(lines):
+        SCREEN.blit(get_font(50).render(l, 0, "White"), (x, y + fsize * 2 * i))
+
 
 def distance(point1, point2):
     x1, y1 = point1.x, point1.y

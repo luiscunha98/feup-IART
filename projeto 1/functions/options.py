@@ -13,10 +13,10 @@ def play(main_menu):
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
 
         #button definition
-        PLAYER_VS_PLAYER = Button(image=None, pos=(500, 250), text_input="PLAYER VS PLAYER", font=get_font(35), base_color="White", hovering_color="Red")
-        PLAYER_VS_CPU = Button(image=None, pos=(447, 350), text_input="PLAYER VS CPU", font=get_font(35), base_color="White", hovering_color="Red")
-        CPU_VS_CPU = Button(image=None, pos=(395, 450), text_input="CPU VS CPU", font=get_font(35), base_color="White", hovering_color="Red")
-        PLAY_BACK = Button(image=None, pos=(640, 600), text_input="BACK", font=get_font(50), base_color="White", hovering_color="Red")
+        PLAYER_VS_PLAYER = Button(image=None, pos=(500, 250), text_input="PLAYER VS PLAYER", font=get_font(35), base_color="White", hovering_color="#DD0000")
+        PLAYER_VS_CPU = Button(image=None, pos=(447, 350), text_input="PLAYER VS CPU", font=get_font(35), base_color="White", hovering_color="#DD0000")
+        CPU_VS_CPU = Button(image=None, pos=(395, 450), text_input="CPU VS CPU", font=get_font(35), base_color="White", hovering_color="#DD0000")
+        PLAY_BACK = Button(image=None, pos=(640, 600), text_input="BACK", font=get_font(50), base_color="White", hovering_color="#DD0000")
 
         # button hover changes and update
         for button in [PLAYER_VS_PLAYER, PLAYER_VS_CPU, CPU_VS_CPU, PLAY_BACK]:
@@ -51,7 +51,7 @@ def instructions(main_menu):
         render_multi_line(text, 50, 100, 20)
 
         # button definition, hover changes and update
-        INSTRUCTIONS_BACK = Button(image=None, pos=(640, 650), text_input="BACK", font=get_font(30), base_color="White", hovering_color="Red")
+        INSTRUCTIONS_BACK = Button(image=None, pos=(640, 650), text_input="BACK", font=get_font(30), base_color="White", hovering_color="#DD0000")
         INSTRUCTIONS_BACK.changeColor(INSTRUCTIONS_MOUSE_POS)
         INSTRUCTIONS_BACK.update(SCREEN)
 

@@ -24,19 +24,24 @@ def cvc(main_menu, dif1, dif2):
         SCREEN.blit(BOARD, (340, 100))
         PLAY_TEXT = pygame.image.load("resources/images/CVC.png")
         RECTANGLE_TEXT = pygame.image.load("resources/images/rectangle.png")
+        RECTANGLE_TEXT2 = pygame.image.load("resources/images/rectangle.png")
         BUTTON_TEXT = pygame.image.load("resources/images/button.png")
         SCORE_TEXT = get_font(25).render("SCORE", True, "White")
         PLAYER1_TEXT = get_font(20).render("COMPUTER 1: " + str(p1wins), True, "Black")
         PLAYER2_TEXT = get_font(20).render("COMPUTER 2: " + str(p2wins), True, "White")
         MOVES_TEXT = get_font(20).render("MOVES: " + str(moves), True, "White")
+        PLAYER_TURN_TEXT = get_font(20).render("COMPUTER: " + str(player_turn), True, "White")
+        fun = "Have\nFun!"
 
         PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 50))
         RECTANGLE_RECT = PLAY_TEXT.get_rect(center=(40, 83))
+        RECTANGLE_RECT2 = PLAY_TEXT.get_rect(center=(40, 340))
         SCORE_RECT = PLAY_TEXT.get_rect(center=(350, 160))
         PLAYER1_RECT = PLAY_TEXT.get_rect(center=(300, 210))
         PLAYER2_RECT = PLAY_TEXT.get_rect(center=(300, 260))
-        MOVES_RECT = MOVES_TEXT.get_rect(center=(1100, 200))
+        MOVES_RECT = MOVES_TEXT.get_rect(center=(180, 500))
         BUTTON_RECT = PLAY_TEXT.get_rect(center=(260, 545))
+        TURN_RECT = PLAYER_TURN_TEXT.get_rect(center=(180, 450))
 
         SCREEN.blit(PLAY_TEXT, PLAY_RECT)
         SCREEN.blit(SCORE_TEXT, SCORE_RECT)
@@ -44,7 +49,12 @@ def cvc(main_menu, dif1, dif2):
         SCREEN.blit(PLAYER2_TEXT, PLAYER2_RECT)
         SCREEN.blit(MOVES_TEXT, MOVES_RECT)
         SCREEN.blit(RECTANGLE_TEXT,RECTANGLE_RECT)
+        SCREEN.blit(RECTANGLE_TEXT2, RECTANGLE_RECT2)
         SCREEN.blit(BUTTON_TEXT,BUTTON_RECT)
+        SCREEN.blit(PLAYER_TURN_TEXT, TURN_RECT)
+        if (n_play == 1):
+            render_multi_line2(fun, 1000, 300, 50)
+
         start_bpositions = {0, 2, 7, 18, 19}
         start_wpositions = {8, 9, 11, 12, 13}
 
@@ -71,7 +81,7 @@ def cvc(main_menu, dif1, dif2):
                 pygame.draw.circle(SCREEN, BLUE, selected.poss3.get_position(), PIECE_RADIUS)
 
         # button definition, hover changes and update
-        PLAY_BACK = Button(image=None, pos=(175, 625), text_input="QUIT GAME", font=get_font(30), base_color="White", hovering_color="Red")
+        PLAY_BACK = Button(image=None, pos=(175, 625), text_input="QUIT GAME", font=get_font(30), base_color="White", hovering_color="Black")
         PLAY_BACK.changeColor(PLAY_MOUSE_POS)
         PLAY_BACK.update(SCREEN)
 
@@ -97,20 +107,8 @@ def cvc(main_menu, dif1, dif2):
 
                         # cpu movements
                         if player_turn == 1:
-                            """if(dif == 1):
-                                index = random.randint(2,4)
-                            elif(dif == 2):
-                                index = random.randint(4,6)
-                            elif(dif == 3):
-                                index = random.randint(6,8)"""
                             player_turn, black_pieces, moves = cpu_movements(player_turn, dif1*2, black_pieces, white_pieces, moves)
                         elif player_turn == 2:
-                            """if(dif == 1):
-                                index = random.randint(2,4)
-                            elif(dif == 2):
-                                index = random.randint(4,6)
-                            elif(dif == 3):
-                                index = random.randint(6,8)"""
                             player_turn, white_pieces, moves = cpu_movements(player_turn, dif2*2, black_pieces, white_pieces, moves)
 
             # game over
