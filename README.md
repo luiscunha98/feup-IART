@@ -25,7 +25,7 @@ Our game is a 2D platformer where each player takes turns, moving one of your fo
 
 Each player can only move their pieces to adjacent positions if they are empty.
 
-We created three great features in this game, Player vs Player, Player vs Computer, and Computer vs Computer. For the Computer algorithm, we implement Minimax, where there are 3 levels, Easy where the depth is 1 , Medium with a depth of 2 and Hard with a depth of 3. The computer pieces are initially randomly placed.
+We created three great features in this game, Player vs Player, Player vs Computer, and Computer vs Computer. For the Computer algorithm, we implement Minimax, where there are 3 levels, Easy where the depth is 2 , Medium with a depth of 4 and Hard with a depth of 6. The computer pieces are initially randomly placed.
 
 _________________________________________________________________________________________
 
